@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "293577788897",
+    "firebase_url": "https://crepito-99.firebaseio.com",
+    "project_id": "crepito-99",
+    "storage_bucket": "crepito-99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293577788897:android:138c19ff96f2ebc5bf16a0",
+        "android_client_info": {
+          "package_name": "com.example.crepito99"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293577788897-ta1fcmlg0bpavq1i7pvc5tdtuo8cpc7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz2U0sZKelK3ej0_4cghKSRm8goMFiN6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293577788897-ta1fcmlg0bpavq1i7pvc5tdtuo8cpc7q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "293577788897-b8irdks3391oqrar40s3mp5k73s9qc0h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.crepito99"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
