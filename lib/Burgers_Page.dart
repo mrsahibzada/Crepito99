@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:crepito99/MyAppBar.dart';
 import 'package:crepito99/BottomNavigationBar.dart';
+import 'package:crepito99/MyAppBar.dart';
+import 'package:flutter/material.dart';
+
 import 'menuItem.dart';
 
 class Burgers extends StatefulWidget {
@@ -13,13 +14,13 @@ class _BurgersState extends State<Burgers> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        iconTheme: IconThemeData(color: Colors.red),
+        iconTheme: IconThemeData(color: Color(0xFFDB2C27)),
         primaryColor: Colors.white,
-        accentColor: Colors.red,
+        accentColor: Color(0xFFDB2C27),
       ),
       home: Scaffold(
         appBar: Myappbar(
-          cont:context,
+          cont: context,
           appBar: AppBar(),
           Title: 'Burgers',
         ),
@@ -47,9 +48,7 @@ class _BurgersState extends State<Burgers> {
                       itemLP: '30LP')),
               Card(
                   child: menuItem(
-                      itemName: 'Swiss',
-                      itemPrice: '280 PKR',
-                      itemLP: '28LP')),
+                      itemName: 'Swiss', itemPrice: '280 PKR', itemLP: '28LP')),
               Card(
                   child: menuItem(
                       itemName: 'Double Swiss',
@@ -67,4 +66,3 @@ class _BurgersState extends State<Burgers> {
     );
   }
 }
-

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'main.dart';
-import 'package:crepito99/MyAppBar.dart';
 import 'package:crepito99/BottomNavigationBar.dart';
+import 'package:crepito99/MyAppBar.dart';
+import 'package:flutter/material.dart';
+
 import 'menuItem.dart';
 
 class Shawarmas extends StatefulWidget {
@@ -14,15 +14,16 @@ class _ShawarmasState extends State<Shawarmas> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        iconTheme: IconThemeData(color: Colors.red),
+        iconTheme: IconThemeData(color: Color(0xFFDB2C27)),
         primaryColor: Colors.white,
-        accentColor: Colors.red,
+        accentColor: Color(0xFFDB2C27),
       ),
       home: Scaffold(
         appBar: Myappbar(
-          cont:context,
+          cont: context,
           appBar: AppBar(),
-          Title:"Shawarma",),
+          Title: "Shawarma",
+        ),
         bottomNavigationBar: bottombar(),
         body: Padding(
           padding: EdgeInsets.all(10.0),
@@ -67,4 +68,3 @@ class _ShawarmasState extends State<Shawarmas> {
     );
   }
 }
-

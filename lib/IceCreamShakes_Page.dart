@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:crepito99/MyAppBar.dart';
+import 'package:flutter/material.dart';
+
 import 'BottomNavigationBar.dart';
 import 'menuItem.dart';
 
@@ -13,14 +14,13 @@ class _IceCreamShakesState extends State<IceCreamShakes> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        iconTheme: IconThemeData(color: Colors.red),
+        iconTheme: IconThemeData(color: Color(0xFFDB2C27)),
         primaryColor: Colors.white,
-        accentColor: Colors.red,
+        accentColor: Color(0xFFDB2C27),
       ),
       home: Scaffold(
-
         appBar: Myappbar(
-          cont:context,
+          cont: context,
           appBar: AppBar(),
           Title: 'Ice-Cream Shakes',
         ),
@@ -43,9 +43,7 @@ class _IceCreamShakesState extends State<IceCreamShakes> {
                       itemLP: '25LP')),
               Card(
                   child: menuItem(
-                      itemName: 'Oreo',
-                      itemPrice: '300 PKR',
-                      itemLP: '30LP')),
+                      itemName: 'Oreo', itemPrice: '300 PKR', itemLP: '30LP')),
               Card(
                   child: menuItem(
                       itemName: 'KitKat',
@@ -63,4 +61,3 @@ class _IceCreamShakesState extends State<IceCreamShakes> {
     );
   }
 }
-

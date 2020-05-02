@@ -86,7 +86,7 @@ class CustomListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        splashColor: Colors.pinkAccent,
+        splashColor: Colors.black,
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0.0, 30.0 - 12.0, 0.0, .0),

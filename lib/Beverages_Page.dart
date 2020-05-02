@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:crepito99/MyAppBar.dart';
 import 'package:crepito99/BottomNavigationBar.dart';
+import 'package:crepito99/MyAppBar.dart';
+import 'package:flutter/material.dart';
+
 import 'menuItem.dart';
 
 class beverages extends StatefulWidget {
@@ -11,16 +12,15 @@ class beverages extends StatefulWidget {
 class _beveragesState extends State<beverages> {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       theme: ThemeData(
-        iconTheme: IconThemeData(color: Colors.red),
+        iconTheme: IconThemeData(color: Color(0xFFDB2C27)),
         primaryColor: Colors.white,
-        accentColor: Colors.red,
+        accentColor: Color(0xFFDB2C27),
       ),
       home: Scaffold(
         appBar: Myappbar(
-          cont:context,
+          cont: context,
           appBar: AppBar(),
           Title: 'Beverages',
         ),
