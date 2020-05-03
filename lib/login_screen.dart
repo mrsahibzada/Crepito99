@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () async {
           try {
             final newUser = await _auth.signInWithEmailAndPassword(
-                email: email, password: password);
+                email: email.trim(), password: password);
             if (newUser != null) {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => HomePage(0)));

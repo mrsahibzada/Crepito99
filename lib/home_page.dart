@@ -9,9 +9,10 @@ import 'package:crepito99/Wraps_Page.dart';
 import 'package:crepito99/cart.dart';
 import 'package:crepito99/dealsbody.dart';
 import 'package:crepito99/my_flutter_app_icons.dart';
-import 'package:crepito99/my_orders.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'Profile_page.dart';
+import 'package:crepito99/DeliveryDetailsPage.dart';
 
 class HomePage extends StatefulWidget {
   //Widget Class for main menu screen.
@@ -35,7 +36,10 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             //Icon button to go to profile
             icon: Icon(Icons.account_circle),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Profile_page()));
+            },
           )
         ],
         backgroundColor: Colors.white,
@@ -48,13 +52,8 @@ class _HomePageState extends State<HomePage> {
           child: ListView(// 4 Options in Drawer
               children: <Widget>[
         CustomDrawerHeader(), // Displays drawer header information
-        CustomListItem(
-            Icons.flip_to_front,
-            'My Orders',
-            () => {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => My_orders()))
-                }), // Displays Option in drawer
+        CustomListItem(Icons.flip_to_front, 'My Orders',
+            () => print("workkkk")), // Displays Option in drawer
         CustomListItem(Icons.star, 'Rate us', () => {}),
         CustomListItem(
             Icons.phone_android, 'Contact us\n03157008877', () => {}),
@@ -105,6 +104,15 @@ class Item extends StatelessWidget {
       // Inkwell widget to make each category clickable
       splashColor: Colors.black,
       onTap: onTap,
+      //(){
+//        Navigator.of(context).push(
+//            MaterialPageRoute(
+//                builder: (context) => dealsbody()
+//
+//            )
+
+      //);
+      // },
       child: Container(
           height: 200,
           width: 200,
@@ -198,7 +206,7 @@ class CustomListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        splashColor: Colors.black,
+        splashColor: Colors.pinkAccent,
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0.0, 30.0 - 12.0, 0.0, .0),

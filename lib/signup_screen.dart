@@ -1,6 +1,10 @@
+//import 'dart:html';
+
 import 'package:crepito99/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'DatabaseServices.dart';
+import 'Profile_page.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -10,8 +14,14 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   bool _rememberMe = false;
   String password;
-  String name;
+  String name='';
   String email;
+  String mobileNumber= '';
+  String address= '';
+  int loyaltyPoints=0;
+  String uid;
+
+
   final _auth = FirebaseAuth.instance;
 
   Widget _buildNameTF() {
@@ -126,7 +136,11 @@ class _SignupScreenState extends State<SignupScreen> {
         onPressed: () async {
           try {
             final newUser = await _auth.createUserWithEmailAndPassword(
-                email: email, password: password);
+                email: email.trim(), password: password);
+            FirebaseUser user = newUser.user;
+            uid=user.uid;
+            await DatabaseService(uid: user.uid).updateAccount(name,email,password,uid);
+            await DatabaseService(uid: user.uid).updateProfile(name, mobileNumber, address, loyaltyPoints, email, password);
             if (newUser != null) {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => HomePage(0)));

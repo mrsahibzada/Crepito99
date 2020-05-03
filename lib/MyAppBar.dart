@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Profile_page.dart';
 
 class Myappbar extends StatelessWidget implements PreferredSizeWidget {
   final String Title;
@@ -27,7 +28,11 @@ class Myappbar extends StatelessWidget implements PreferredSizeWidget {
       actions:<Widget>[
         IconButton(//Icon button to go to profile
           icon: Icon(Icons.account_circle),
-          onPressed: (){},
+          onPressed: (){
+//            Navigator.pushNamed(context,'/profile_page');
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Profile_page()));
+          },
         )
       ],
       backgroundColor: Colors.white,
