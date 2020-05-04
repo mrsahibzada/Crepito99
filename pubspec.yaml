@@ -7,6 +7,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  progress_indicators: ^0.1.5
   firebase_auth: ^0.16.0
   firebase_core: ^0.4.4+3
   cloud_firestore: ^0.13.5

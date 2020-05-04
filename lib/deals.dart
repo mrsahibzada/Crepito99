@@ -77,7 +77,7 @@ class _DealsState extends State<Deals> {
             onPressed: (){
               ////USe this piece of code in menu screen
 
-
+              cartData.cartItems+=1;
               cartData.itemNames.add(name);
               cartData.itemPrices.add(price);
               cartData.itemQty.add(1);

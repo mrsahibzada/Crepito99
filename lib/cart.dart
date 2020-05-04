@@ -1,8 +1,10 @@
 import 'package:crepito99/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:crepito99/Tracking.dart';
 
 class CartDetails {
+  var cartItems=0;
   var itemNames=[];
   var itemPrices=[];
   var itemQty=[];
@@ -43,6 +45,14 @@ int deliveryCharges=9;
   @override
 
   Widget build(BuildContext context) {
+    if(cartData.cartItems==0)
+      return Center(child:Text("Your cart's empty. Fill it up!",
+          style: TextStyle(
+              color:Colors.grey,
+              fontSize: 20,
+              fontFamily: 'Roboto'
+          )));
+    else
     return Column(
       children: <Widget>[
 
@@ -433,6 +443,68 @@ class TotalBill extends StatelessWidget{
   }
 }
 class BottomButtons extends StatelessWidget {
+  createAlert(BuildContext context){
+    return showDialog(context:context,builder:(context){
+      return AlertDialog(
+
+          title:Text('Redeem Loyality Points'),
+          content: Text('You can redeem your loyalty points by paying for this burger through them. Would you like to?',
+            style: TextStyle(
+                color: Colors.grey
+            ),),
+          actions:[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0.0,0,25.0,0),
+              child: ButtonTheme(
+                buttonColor:Colors.white,
+                height: 36,
+                minWidth: 93,
+                child: RaisedButton(
+                  textColor: Color(0xFFDB2C27),
+                  child: Text("No"),
+                  onPressed: (){
+                    cartData.cartItems=0;
+                    cartData.itemPrices=[];
+                    cartData.itemNames=[];
+                    cartData.itemQty=[];
+                        () => Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => TrackOrder()));
+
+
+                  },
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25.0,0,10.0,0),
+              child: ButtonTheme(
+                buttonColor:Colors.white,
+                height: 36,
+                minWidth: 93,
+                child: RaisedButton(
+                  textColor:Color(0xFFDB2C27) ,
+                  child: Text("Yes"),
+
+                  onPressed: (){
+                    cartData.cartItems=0;
+                    cartData.itemPrices=[];
+                    cartData.itemNames=[];
+                    cartData.itemQty=[];
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => TrackOrder()));
+
+
+                  },
+                ),
+              ),
+            ),
+          ]
+
+
+      );
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -440,38 +512,41 @@ class BottomButtons extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-         RaisedButton(
-          onPressed: (){
-            Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => HomePage(1)));
-          },
-           child: Row(
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-             children: <Widget>[
-               Padding(
-                 padding: const EdgeInsets.all(9.0),
-                 child: Icon(Icons.arrow_back_ios,color: Color(0xFFDB2C27),size:16),
-               ),
-               Padding(
-                 padding: const EdgeInsets.all(9.0),
-                 child: Text("Order More",
-                   style: TextStyle(
-                       color: Color(0xFFDB2C27),
-                       fontSize: 14,
-                       fontFamily: "Roboto",
-                       fontWeight: FontWeight.w400,
-                     letterSpacing: 1.25
-                   ),),
-               ),
-
-             ],
-           ),
-           color: Colors.white,
-
-         ),
           RaisedButton(
-            onPressed: (){},
+            onPressed: (){
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(1)));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(9.0),
+                  child: Icon(Icons.arrow_back_ios,color: Color(0xFFDB2C27),size:16),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(9.0),
+                  child: Text("Order More",
+                    style: TextStyle(
+                        color: Color(0xFFDB2C27),
+                        fontSize: 14,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: 1.25
+                    ),),
+                ),
+
+              ],
+            ),
+            color: Colors.white,
+
+          ),
+          RaisedButton(
+            onPressed: (){
+              createAlert(context);
+
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -484,7 +559,7 @@ class BottomButtons extends StatelessWidget {
                         fontSize: 14,
                         fontFamily: "Roboto",
                         fontWeight: FontWeight.w400,
-                      letterSpacing: 1.25
+                        letterSpacing: 1.25
                     ),),
                 ),
                 Padding(
