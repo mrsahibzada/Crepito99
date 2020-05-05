@@ -12,6 +12,8 @@ class _LoginScreenState extends State<LoginScreen> {
   String password;
   String email;
   final _auth = FirebaseAuth.instance;
+  String errorMessage;
+
   Widget _buildPasswordTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +98,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   .push(MaterialPageRoute(builder: (context) => HomePage(0)));
             }
           } catch (e) {
-            print(e);
+            switch (e.code) {
+              case "ERROR_INVALID_EMAIL":
+                errorMessage = "Your email address appears to be malformed.";
+                break;
+              case "ERROR_USER_DISABLED":
+                errorMessage = "User with this email has been disabled.";
+                break;
+              case "ERROR_TOO_MANY_REQUESTS":
+                errorMessage = "Too many requests. Try again later.";
+                break;
+              default:
+                errorMessage = "An undefined Error happened.";
+            }
+            if (errorMessage != null) {
+              return Future.error(errorMessage);
+            }
           }
         },
         padding: EdgeInsets.all(15.0),
@@ -142,7 +159,9 @@ class _LoginScreenState extends State<LoginScreen> {
           Container(
             alignment: Alignment.centerLeft,
             child: FlatButton(
-              onPressed: () => print('Forgot Password Button Pressed'),
+              onPressed: () async {
+                await _auth.sendPasswordResetEmail(email: email);
+              },
               padding: EdgeInsets.only(left: 0.0),
               child: Text(
                 'Forgot Password?',

@@ -3,8 +3,8 @@
 import 'package:crepito99/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'DatabaseServices.dart';
-import 'Profile_page.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -14,13 +14,13 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   bool _rememberMe = false;
   String password;
-  String name='';
+  String name = '';
   String email;
-  String mobileNumber= '';
-  String address= '';
-  int loyaltyPoints=0;
+  String mobileNumber = '';
+  String address = '';
+  int loyaltyPoints = 0;
   String uid;
-
+  String errorMessage;
 
   final _auth = FirebaseAuth.instance;
 
@@ -138,15 +138,42 @@ class _SignupScreenState extends State<SignupScreen> {
             final newUser = await _auth.createUserWithEmailAndPassword(
                 email: email.trim(), password: password);
             FirebaseUser user = newUser.user;
-            uid=user.uid;
-            await DatabaseService(uid: user.uid).updateAccount(name,email,password,uid);
-            await DatabaseService(uid: user.uid).updateProfile(name, mobileNumber, address, loyaltyPoints, email, password);
+            uid = user.uid;
+            await DatabaseService(uid: user.uid)
+                .updateAccount(name, email, password, uid);
+            await DatabaseService(uid: user.uid).updateProfile(
+                name, mobileNumber, address, loyaltyPoints, email, password);
             if (newUser != null) {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => HomePage(0)));
             }
           } catch (e) {
-            print(e);
+            switch (e.code) {
+              case "ERROR_INVALID_EMAIL":
+                errorMessage = "Your email address appears to be malformed.";
+                break;
+              case "ERROR_WRONG_PASSWORD":
+                errorMessage = "Your password is wrong.";
+                break;
+              case "ERROR_USER_NOT_FOUND":
+                errorMessage = "User with this email doesn't exist.";
+                break;
+              case "ERROR_USER_DISABLED":
+                errorMessage = "User with this email has been disabled.";
+                break;
+              case "ERROR_TOO_MANY_REQUESTS":
+                errorMessage = "Too many requests. Try again later.";
+                break;
+              case "ERROR_OPERATION_NOT_ALLOWED":
+                errorMessage =
+                    "Signing in with Email and Password is not enabled.";
+                break;
+              default:
+                errorMessage = "An undefined Error happened.";
+            }
+            if (errorMessage != null) {
+              return Future.error(errorMessage);
+            }
           }
         },
         padding: EdgeInsets.all(15.0),
