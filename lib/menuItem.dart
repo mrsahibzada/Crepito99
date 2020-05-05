@@ -40,7 +40,7 @@ class menuItem extends StatelessWidget {
                 color: Colors.red,),
               onTap: (){
                 String price=itemPrice.substring(0,itemPrice.length-4);
-cartData.cartItems+=1;
+
               cartData.itemNames.add(itemName);
                 cartData.itemPrices.add(int.parse(price));
             cartData.itemQty.add(1);

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:crepito99/MyAppBar.dart';
 import 'package:crepito99/BottomNavigationBar.dart';
 import 'menuItem.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class beverages extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class beverages extends StatefulWidget {
 }
 
 class _beveragesState extends State<beverages> {
+  Firestore _firestore = Firestore.instance;
   @override
   Widget build(BuildContext context) {
 
@@ -25,46 +28,50 @@ class _beveragesState extends State<beverages> {
           Title: 'Beverages',
         ),
         bottomNavigationBar: bottombar(),
-        body: Padding(
-          padding: EdgeInsets.all(10.0),
-          child: ListView(
-            children: <Widget>[
-              Card(
-                child: menuItem(
-                  itemName: 'Tea',
-                  itemPrice: '100 PKR',
-                  itemLP: '10LP',
-                ),
+        body:Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(children: <Widget>[
+              StreamBuilder<QuerySnapshot>(
+                stream: _firestore.collection('Beverages').snapshots(),
+                builder: (context, snapshot) {
+                  final data = snapshot.data.documents;
+                  List<CardViewer> cardWidgets = [];
+                  for (var items in data) {
+                    print(items.data['name']);
+                    final name = items.data['name'];
+                    final price = items.data['price'].toString();
+                    final loyaltyPoints = items.data['loyaltyPoints'].toString();
+                    final card = CardViewer(
+                      name: name,
+                      price: price,
+                      loyaltyPoint: loyaltyPoints,
+                    );
+                    cardWidgets.add(card);
+                  }
+                  return Expanded(
+                    child: ListView(
+                      children: cardWidgets,
+                    ),
+                  );
+                },
               ),
-              Card(
-                  child: menuItem(
-                      itemName: 'Coffee',
-                      itemPrice: '140 PKR',
-                      itemLP: '14LP')),
-              Card(
-                  child: menuItem(
-                      itemName: 'Hot Chocolate',
-                      itemPrice: '180 PKR',
-                      itemLP: '18LP')),
-              Card(
-                  child: menuItem(
-                      itemName: 'Coffee + Brownie',
-                      itemPrice: '220 PKR',
-                      itemLP: '22LP')),
-              Card(
-                  child: menuItem(
-                      itemName: 'Water Bottle',
-                      itemPrice: '45 PKR',
-                      itemLP: '5LP')),
-              Card(
-                  child: menuItem(
-                      itemName: 'Soft Drink Can',
-                      itemPrice: '50 PKR',
-                      itemLP: '5LP')),
-            ],
-          ),
-        ),
+            ])),
       ),
     );
+  }
+}
+
+class CardViewer extends StatelessWidget {
+  @override
+  final String name;
+  final String price;
+  final String loyaltyPoint;
+  CardViewer({this.name, this.price, this.loyaltyPoint});
+  Widget build(BuildContext context) {
+    return Card(
+        child: menuItem(
+            itemName: name,
+            itemPrice: price + ' PKR',
+            itemLP: loyaltyPoint + ' LP'));
   }
 }

@@ -1,16 +1,28 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:crepito99/MyAppBar.dart';
 import 'package:crepito99/BottomNavigationBar.dart';
 import 'menuItem.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-
-class Sandwiches extends StatefulWidget {
-  @override
-  _SandwichesState createState() => _SandwichesState();
-}
 
 class _SandwichesState extends State<Sandwiches> {
+
+  Firestore _firestore = Firestore.instance;
+  @override
+  initState(){
+    super.initState();
+    collectData();
+  }
+
+  void collectData()async{
+    sandwichesTypes= await Firestore.instance.collection('Category').document('Sandwich').get();
+    types = List.from(sandwichesTypes['items']);
+  }
+  List<String> types;
+  var sandwichesTypes;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,28 +38,58 @@ class _SandwichesState extends State<Sandwiches> {
           Title: 'Sandwiches',
         ),
         bottomNavigationBar: bottombar(),
+
         body: Padding(
-          padding: EdgeInsets.all(10.0),
-          child: ListView(children: <Widget>[
-            Card(
-              child: menuItem(
-                  itemName: 'Chicken',
-                  itemPrice: '280 PKR',
-                  itemLP: '28LP'),
-            ),
-            Card(
-              child: menuItem(
-                  itemName: 'Club', itemPrice: '360 PKR', itemLP: '36LP'),
-            ),
-            Card(
-              child: menuItem(
-                  itemName: 'Panini',
-                  itemPrice: '350 PKR',
-                  itemLP: '35LP'),
-            ),
-          ]),
-        ),
+            padding: EdgeInsets.all(10.0),
+            child: Column(children: <Widget>[
+              StreamBuilder<QuerySnapshot>(
+                stream: _firestore.collection('Sandwiches').snapshots(),
+                builder: (context, snapshot) {
+                  final data = snapshot.data.documents;
+                  List<CardViewer> cardWidgets = [];
+                  for (var items in data) {
+                    print(items.data['name']);
+                    final name = items.data['name'];
+                    final price = items.data['price'].toString();
+                    final loyaltyPoints =
+                    items.data['loyaltyPoints'].toString();
+                    final card = CardViewer(
+                      name: name,
+                      price: price,
+                      loyaltyPoint: loyaltyPoints,
+                    );
+                    cardWidgets.add(card);
+                  }
+                  return Expanded(
+                    child: ListView(
+                      children: cardWidgets,
+                    ),
+                  );
+                },
+              ),
+            ])),
       ),
     );
   }
+}
+
+class CardViewer extends StatelessWidget {
+  @override
+  final String name;
+  final String price;
+  final String loyaltyPoint;
+  CardViewer({this.name, this.price, this.loyaltyPoint});
+  Widget build(BuildContext context) {
+    return Card(
+        child: menuItem(
+            itemName: name,
+            itemPrice: price + ' PKR',
+            itemLP: loyaltyPoint + ' LP'));
+  }
+}
+
+
+class Sandwiches extends StatefulWidget {
+  @override
+  _SandwichesState createState() => _SandwichesState();
 }

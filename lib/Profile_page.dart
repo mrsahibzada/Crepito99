@@ -6,6 +6,7 @@ import 'BottomNavigationBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'DatabaseServices.dart';
+
 class Profile_page extends StatefulWidget {
   @override
   _Profile_pageState createState() => _Profile_pageState();
@@ -13,32 +14,35 @@ class Profile_page extends StatefulWidget {
 
 class _Profile_pageState extends State<Profile_page> {
   @override
-  initState(){
-
+  initState() {
     inputData();
     super.initState();
 //    name=userData[name];
 //    number=userData[name];
 
-    textController.addListener((){
-      final text= textController.text;
-      textController.value=textController.value.copyWith(
+    textController.addListener(() {
+      final text = textController.text;
+      textController.value = textController.value.copyWith(
         text: text,
       );
-      });
+    });
   }
-  void inputData()async{
+
+  void inputData() async {
     final FirebaseUser user = await _auth.currentUser();
     uid = user.uid;
-    profileData= await Firestore.instance.collection('profile').document(uid).get();
-    accountData= await Firestore.instance.collection('account').document(uid).get();
-    textController.text=profileData['name'];
-    numberController.text=profileData['mobileNumber'];
-    addressController.text=profileData['address'];
-    loyaltyPointController.text=(profileData['loyaltyPoints']).toString();
-    emailController.text=profileData['email'];
-    passwordController.text=profileData['password'];
+    profileData =
+        await Firestore.instance.collection('profile').document(uid).get();
+    accountData =
+        await Firestore.instance.collection('account').document(uid).get();
+    textController.text = profileData['name'];
+    numberController.text = profileData['mobileNumber'];
+    addressController.text = profileData['address'];
+    loyaltyPointController.text = (profileData['loyaltyPoints']).toString();
+    emailController.text = profileData['email'];
+    passwordController.text = profileData['password'];
   }
+
   var accountData;
   var profileData;
   String uid;
@@ -48,26 +52,28 @@ class _Profile_pageState extends State<Profile_page> {
   int loyaltyPoints;
   String password;
   String location;
-  final _auth= FirebaseAuth.instance;
-  final CollectionReference profile_Collection = Firestore.instance.collection('profile');
-  final CollectionReference account_Collection = Firestore.instance.collection('account');
+  final _auth = FirebaseAuth.instance;
+  final CollectionReference profile_Collection =
+      Firestore.instance.collection('profile');
+  final CollectionReference account_Collection =
+      Firestore.instance.collection('account');
   var textController = TextEditingController();
   final numberController = TextEditingController();
-  final addressController= TextEditingController();
-  final loyaltyPointController= TextEditingController();
-  final emailController=TextEditingController();
-  final passwordController=TextEditingController();
+  final addressController = TextEditingController();
+  final loyaltyPointController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
 //    return StreamProvider<QuerySnapshot>.value(
 //      value: DatabaseService().profile,
-       return MaterialApp(
-        theme: ThemeData(
-          iconTheme: IconThemeData(color: Colors.red),
+    return MaterialApp(
+      theme: ThemeData(
+        iconTheme: IconThemeData(color: Colors.red),
 //        primaryColor: Colors.black87,
-          accentColor: Colors.red,
-        ),
-          home:Scaffold(
+        accentColor: Colors.red,
+      ),
+      home: Scaffold(
         appBar: Myappbar(
           cont: context,
           appBar: AppBar(),
@@ -102,24 +108,23 @@ class _Profile_pageState extends State<Profile_page> {
                     child: TextField(
                       controller: textController,
                       onChanged: (value) {
-                        name=value;
+                        name = value;
                       },
-                      onEditingComplete: ()async {
+                      onEditingComplete: () async {
                         await profile_Collection.document(uid).updateData({
                           'name': name,
                         });
                         await account_Collection.document(uid).updateData({
-                          'name':name,
+                          'name': name,
                         });
                       },
-
                       keyboardType: TextInputType.text,
                       style: TextStyle(
                         color: Colors.black54,
                       ),
-
+                    ),
                   ),
-                ),],
+                ],
               ),
             ),
             Container(
@@ -146,7 +151,7 @@ class _Profile_pageState extends State<Profile_page> {
                       onChanged: (value) {
                         number = value;
                       },
-                      onEditingComplete: ()async{
+                      onEditingComplete: () async {
                         await profile_Collection.document(uid).updateData({
                           'mobileNumber': number,
                         });
@@ -185,7 +190,7 @@ class _Profile_pageState extends State<Profile_page> {
                       onChanged: (value) {
                         location = value;
                       },
-                      onEditingComplete: ()async{
+                      onEditingComplete: () async {
                         await profile_Collection.document(uid).updateData({
                           'address': location,
                         });
@@ -196,9 +201,7 @@ class _Profile_pageState extends State<Profile_page> {
                             Icons.edit_location,
                             color: Colors.black87,
                           ),
-                          onPressed: (){
-
-                          },
+                          onPressed: () {},
                         ),
                       ),
                       keyboardType: TextInputType.text,
@@ -229,7 +232,7 @@ class _Profile_pageState extends State<Profile_page> {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(10.0, 13.0, 10.0, 0.0),
-                    child:  TextField(
+                    child: TextField(
                       readOnly: true,
                       controller: loyaltyPointController,
 //                    keyboardType: TextInputType.text,
@@ -237,7 +240,8 @@ class _Profile_pageState extends State<Profile_page> {
                         color: Colors.black54,
                       ),
                     ),
-                  ),],
+                  ),
+                ],
               ),
             ),
             Container(
@@ -260,14 +264,15 @@ class _Profile_pageState extends State<Profile_page> {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(10.0, 13.0, 10.0, 0.0),
-                    child:  TextField(
+                    child: TextField(
                       readOnly: true,
                       controller: emailController,
                       style: TextStyle(
                         color: Colors.black54,
                       ),
                     ),
-                  ),],
+                  ),
+                ],
               ),
             ),
             Container(
@@ -295,7 +300,7 @@ class _Profile_pageState extends State<Profile_page> {
                       onChanged: (value) {
                         number = value;
                       },
-                      onEditingComplete: ()async{
+                      onEditingComplete: () async {
                         await profile_Collection.document(uid).updateData({
                           'password': password,
                         });
@@ -309,10 +314,9 @@ class _Profile_pageState extends State<Profile_page> {
                 ],
               ),
             ),
-
           ],
         ),
-      ),);
-
+      ),
+    );
   }
 }

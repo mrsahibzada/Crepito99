@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:crepito99/MyAppBar.dart';
 import 'package:crepito99/BottomNavigationBar.dart';
 import 'menuItem.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Specials extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class Specials extends StatefulWidget {
 }
 
 class _SpecialsState extends State<Specials> {
+  Firestore _firestore = Firestore.instance;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,26 +22,51 @@ class _SpecialsState extends State<Specials> {
           Title: 'Specials',
         ),
         bottomNavigationBar: bottombar(),
-        body: Padding(
-          padding: EdgeInsets.all(10.0),
-          child: ListView(
-            children: <Widget>[
-              Card(
-                child: menuItem(itemName: 'Brownie', itemPrice: '160 PKR', itemLP: '16LP'),
+        body:Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(children: <Widget>[
+              StreamBuilder<QuerySnapshot>(
+                stream: _firestore.collection('Specials').snapshots(),
+                builder: (context, snapshot) {
+                  final data = snapshot.data.documents;
+                  List<CardViewer> cardWidgets = [];
+                  for (var items in data) {
+                    print(items.data['name']);
+                    final name = items.data['name'];
+                    final price = items.data['price'].toString();
+                    final loyaltyPoints =
+                    items.data['loyaltyPoints'].toString();
+                    final card = CardViewer(
+                      name: name,
+                      price: price,
+                      loyaltyPoint: loyaltyPoints,
+                    );
+                    cardWidgets.add(card);
+                  }
+                  return Expanded(
+                    child: ListView(
+                      children: cardWidgets,
+                    ),
+                  );
+                },
               ),
-              Card(
-                child: menuItem(itemName: 'Cookie', itemPrice: '230 PKR', itemLP: '23LP'),
-              ),
-              Card(
-                child: menuItem(itemName: 'Zinger Paratha', itemPrice: '180 PKR', itemLP: '18LP'),
-              ),
-              Card(
-                child: menuItem(itemName: 'Ice-Cream', itemPrice: '200 PKR', itemLP: '20LP'),
-              ),
-            ],
-          ),
-        ),
+            ])),
       ),
     );
+  }
+}
+
+class CardViewer extends StatelessWidget {
+  @override
+  final String name;
+  final String price;
+  final String loyaltyPoint;
+  CardViewer({this.name, this.price, this.loyaltyPoint});
+  Widget build(BuildContext context) {
+    return Card(
+        child: menuItem(
+            itemName: name,
+            itemPrice: price + ' PKR',
+            itemLP: loyaltyPoint + ' LP'));
   }
 }

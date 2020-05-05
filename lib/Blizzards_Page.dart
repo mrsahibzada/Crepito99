@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:crepito99/MyAppBar.dart';
 import 'package:crepito99/BottomNavigationBar.dart';
 import 'menuItem.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class blizzards extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class blizzards extends StatefulWidget {
 }
 
 class _blizzardsState extends State<blizzards> {
+  Firestore _firestore = Firestore.instance;
   @override
   Widget build(BuildContext context) {
 
@@ -26,27 +29,50 @@ class _blizzardsState extends State<blizzards> {
         ),
         bottomNavigationBar: bottombar(),
         body: Padding(
-          padding: EdgeInsets.all(10.0),
-          child: ListView(
-            children: <Widget>[
-              Card(
-                  child: menuItem(
-                      itemName: 'Oreo', itemPrice: '330 PKR', itemLP: '33LP')),
-              Card(
-                  child: menuItem(itemName: 'Bounty', itemPrice: '330 PKR', itemLP: '33LP')),
-              Card(
-                  child: menuItem(itemName: 'KitKat', itemPrice: '330 PKR', itemLP: '33LP')),
-              Card(
-                  child: menuItem(itemName: 'Mars', itemPrice: '330 PKR', itemLP: '33LP')),
-              Card(
-                  child: menuItem(itemName: 'Snickers', itemPrice: '330 PKR', itemLP: '33LP')),
-              Card(
-                  child: menuItem(
-                      itemName: 'Twix', itemPrice: '330 PKR', itemLP: '33LP')),
-            ],
-          ),
-        ),
+            padding: EdgeInsets.all(10.0),
+            child: Column(children: <Widget>[
+              StreamBuilder<QuerySnapshot>(
+                stream: _firestore.collection('Blizzards').snapshots(),
+                builder: (context, snapshot) {
+                  final data = snapshot.data.documents;
+                  List<CardViewer> cardWidgets = [];
+                  for (var items in data) {
+                    print(items.data['name']);
+                    final name = items.data['name'];
+                    final price = items.data['price'].toString();
+                    final loyaltyPoints =
+                    items.data['loyaltyPoints'].toString();
+                    final card = CardViewer(
+                      name: name,
+                      price: price,
+                      loyaltyPoint: loyaltyPoints,
+                    );
+                    cardWidgets.add(card);
+                  }
+                  return Expanded(
+                    child: ListView(
+                      children: cardWidgets,
+                    ),
+                  );
+                },
+              ),
+            ])),
       ),
     );
+  }
+}
+
+class CardViewer extends StatelessWidget {
+  @override
+  final String name;
+  final String price;
+  final String loyaltyPoint;
+  CardViewer({this.name, this.price, this.loyaltyPoint});
+  Widget build(BuildContext context) {
+    return Card(
+        child: menuItem(
+            itemName: name,
+            itemPrice: price + ' PKR',
+            itemLP: loyaltyPoint + ' LP'));
   }
 }
