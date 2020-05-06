@@ -1,5 +1,8 @@
 import 'package:crepito99/dealItem.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class dealsbody extends StatefulWidget {
   @override
@@ -7,67 +10,94 @@ class dealsbody extends StatefulWidget {
 }
 
 class _dealsbodyState extends State<dealsbody> {
+
+
+  Firestore _firestore = Firestore.instance;
   @override
+
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: ListView(
-        children: <Widget>[
-          Card(
-            child: deal_item(
-              imagePath: 'assets/images/LoneRanger.png',
-              dealsPrices: 450,
-              name: 'Lone Ranger',
-              detail:
-                  '1 Zinger Burger, 1 Regular Fries, 1 Chocolate Mud Shake - 450 PKR',
-            ),
+    return  Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Column(children: <Widget>[
+          StreamBuilder<QuerySnapshot>(
+            stream: _firestore.collection('deals').snapshots(),
+            builder: (context, snapshot) {
+              final data = snapshot.data.documents;
+              List<Cardviewer> cardWidgets = [];
+              for (var items in data) {
+                print(items.data['name']);
+                final name = items.data['name'];
+//                final price = items.data['price'].toString();
+                final details = items.data['details'];
+                final path = items.data['imagePath'];
+                final card = Cardviewer(name, details, path);
+                cardWidgets.add(card);
+              }
+              return Expanded(
+                child: ListView(
+                  children: cardWidgets,
+                ),
+              );
+            },
           ),
-          Card(
-            child: deal_item(
-                imagePath: 'assets/images/LoneRanger2.0.png',
-                dealsPrices: 500,
-                name: 'Lone Ranger 2.0',
-                detail:
-                    '1 Garlic Mayo Wrap, 1 Regular Fries, 1 Chocolate Mud Shake - 500 PKR'),
-          ),
-          Card(
-            child: deal_item(
-                imagePath: 'assets/images/Duo_Deal-2.png',
-                dealsPrices: 700,
-                name: 'Duo Deal',
-                detail:
-                    '1 Panini, 1 Garlic Mayo Wrap, 1 Regular Fries, 1 Chocolate Mud Shake - 700 PKR'),
-          ),
-          Card(
-            child: deal_item(
-                imagePath: 'assets/images/BurgerShurger.png',
-                dealsPrices: 1000,
-                name: 'Burger Shurger',
-                detail: '5 Zinger Burger, 1.5L Soft Drink - 1000 PKR'),
-          ),
-          Card(
-              child: deal_item(
-                  imagePath: 'assets/images/ShutUpandTakeMyMoney.png',
-                  dealsPrices: 1800,
-                  name: 'Shut up and take my money',
-                  detail:
-                      '1 Garlic Mayo Wrap, 1 Honey Mustard Wrap, 1 Chipotle Wrap, 3 Regular Fries, 1 Chocolate Mud Shake, 1 Oreo Shake, 1 Kitkat Shake - 1800 PKR')),
-          Card(
-              child: deal_item(
-                  imagePath: 'assets/images/WeHaveGotYouCovered.png',
-                  dealsPrices: 2400,
-                  name: 'We Have Got You Covered',
-                  detail:
-                      '5 Zinger Burgers. 5 Regular Fries. 3 Chocolate Mud Shakes. 2 Oreo IceCreams - 2400 PKR')),
-          Card(
-              child: deal_item(
-                  imagePath: 'assets/images/WeHaveGotYouCovered-2.0.png',
-                  dealsPrices: 2800,
-                  name: 'We Have Got You Covered-2.0',
-                  detail:
-                      '2 Garlic Mayo Wraps. 2 Chipotle Wraps. 1 Honey Mustard Wrap. 5 Regular Fries. 3 Chocolate Mud Shakes. 2 Oreo IceCream Shakes - 2800 PKR')),
-        ],
-      ),
-    );
+        ]));
+
   }
 }
+
+
+
+
+class Cardviewer extends StatefulWidget {
+
+
+  final String name;
+  final String details;
+  final String path;
+  const Cardviewer(this.name, this.details,this.path);
+  @override
+  _CardviewerState createState() => _CardviewerState();
+
+
+}
+
+class _CardviewerState extends State<Cardviewer> {
+
+
+  @override
+  initState(){
+    super.initState();
+    downloadImage();
+  }
+  downloadImage()async {
+
+    int length= widget.path.length;
+    String imagePath= widget.path.substring(28,length);
+    StorageReference ref = FirebaseStorage.instance.ref().child('$imagePath');
+
+
+// no need of the file extension, the name will do fine.
+
+    print(widget.path);
+    var url;
+    print('hello');
+    url = await ref.getDownloadURL();
+    print('hello');
+    url=url.toString();
+    print(url);
+  }
+
+
+    Widget build(BuildContext context) {
+      return Card(
+        child: deal_item(
+          name: widget.name,
+          detail: widget.details,
+          imagePath: 'https://i.stack.imgur.com/8szbk.png',
+        ),);
+    }
+  }
+
+
+
+

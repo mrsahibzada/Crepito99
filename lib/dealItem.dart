@@ -5,16 +5,16 @@ import 'package:crepito99/home_page.dart';
 class deal_item extends StatelessWidget {
   final String name;
   final String detail;
-  final int dealsPrices;
+  int dealsPrices;
   final String imagePath;
 
-  deal_item({@required this.imagePath,@required this.name,@required this.dealsPrices, @required this.detail});
+  deal_item({@required this.imagePath,@required this.name, @required this.detail});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.all(10.0),
-      leading: Image.asset(imagePath,
+      leading: Image.network(imagePath,
       height: 40,
           width: 40,
         fit:BoxFit.cover

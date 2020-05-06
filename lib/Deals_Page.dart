@@ -2,7 +2,6 @@ import 'package:crepito99/BottomNavigationBar.dart';
 import 'package:crepito99/MyAppBar.dart';
 import 'package:crepito99/dealsbody.dart';
 import 'package:flutter/material.dart';
-
 import 'drawer.dart';
 
 class Deals_Page extends StatefulWidget {
@@ -11,6 +10,7 @@ class Deals_Page extends StatefulWidget {
 }
 
 class _Deals_PageState extends State<Deals_Page> {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
