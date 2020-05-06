@@ -13,6 +13,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String email;
   final _auth = FirebaseAuth.instance;
   String errorMessage;
+  bool credential_check = false;
 
   Widget _buildPasswordTF() {
     return Column(
@@ -112,6 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 errorMessage = "An undefined Error happened.";
             }
             if (errorMessage != null) {
+              setState(() {
+                credential_check = true;
+              });
               return Future.error(errorMessage);
             }
           }
@@ -251,6 +255,23 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget _TextTF() {
+    return Visibility(
+        visible: credential_check ? true : false,
+        child: Container(
+          padding: EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+          child: Text(
+            "Incorrect Email or Password",
+            style: TextStyle(
+                color: Color(0xFFDB2C27),
+                letterSpacing: 1.5,
+                fontSize: 12.0,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'OpenSans'),
+          ),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -298,6 +319,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   _buildPasswordTF(),
                   SizedBox(height: 20.0),
                   _buildRememberMeCheckbox_ForgotPassword(),
+//                  SizedBox(height: 10.0),
+                  _TextTF(),
                   SizedBox(height: 10.0),
                   _buildButtonTF(),
                   _buildOrText(),
