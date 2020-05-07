@@ -45,7 +45,8 @@ class DatabaseService {
       'totalBill':totalBill,
       'timeStamp':timeStamp,
       'state':state,
-      'feedBack':feedBack
+      'feedBack':feedBack,
+      'userID':uid
 
 
     });

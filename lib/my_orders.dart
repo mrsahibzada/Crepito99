@@ -28,7 +28,7 @@ class _My_ordersState extends State<My_orders> {
       body:StreamBuilder(
         stream: Firestore.instance.collection("myorders").document(uid).snapshots(),
       builder: (context, snapshot){
-          if(!snapshot.hasData) return Text("loading...");
+          try {if(!snapshot.hasData) return Text("loading...");
 
 
 
@@ -48,14 +48,32 @@ class _My_ordersState extends State<My_orders> {
               return StreamBuilder(
                 stream: Firestore.instance.collection("orders").document(snapshot.data["orderList"][len-1-index].toString()).snapshots(),
                 builder: (context,snapshot){
-                  if (!snapshot.hasData) return Text("Loading");
-                  return (OrderItem(temp[len-1-index],snapshot.data["totalBill"],snapshot.data["state"],snapshot.data["itemList"],snapshot.data["itemPrices"],snapshot.data["itemQty"],snapshot.data["timeStamp"],snapshot.data["status"],0));
-
+                  try {
+                    if (!snapshot.hasData) return Text("Loading");
+                    return (OrderItem(
+                        temp[len - 1 - index],
+                        snapshot.data["totalBill"],
+                        snapshot.data["state"],
+                        snapshot.data["itemList"],
+                        snapshot.data["itemPrices"],
+                        snapshot.data["itemQty"],
+                        snapshot.data["timeStamp"],
+                        snapshot.data["status"],
+                        0));
+                  } catch(e){return Text("Invalid Entry");}
                 },
               ) ;
           });
-      },
+      }catch(e){
+            return Text("Place Some Ordre!",
+            style: TextStyle(
+            color:Colors.grey,
+            fontSize: 20,
+            fontFamily: 'Roboto'
+            ));
+          }},
       )
+
 
 
       );

@@ -104,38 +104,27 @@ class Item extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       // Inkwell widget to make each category clickable
+
       splashColor: Colors.black,
       onTap: onTap,
-      //(){
-//        Navigator.of(context).push(
-//            MaterialPageRoute(
-//                builder: (context) => dealsbody()
-//
-//            )
+      child: Card(
+          semanticContainer: false,
 
-      //);
-      // },
-      child: Container(
-          height: 200,
-          width: 200,
-          child: Card(
-              semanticContainer: true,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              elevation: 10.0,
-              child: Column(children: <Widget>[
-                new Image.asset(imagePath,
-                    height: 200, width: 200, fit: BoxFit.cover),
-                new SizedBox(height: 1.0),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
-                  child: new Text(name,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w300)),
-                )
-              ]))),
+          elevation: 10.0,
+          child: Column(children: <Widget>[
+            new Image.asset(imagePath,
+                 fit: BoxFit.cover),
+            new SizedBox(height: 1.0),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
+              child: new Text(name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w300)),
+            )
+          ])),
     );
   }
 }
@@ -152,7 +141,7 @@ class _GridExtended extends State<GridViewList> {
     return Scaffold(
         body: GridView.count(
       crossAxisCount: 2,
-      childAspectRatio: (170 / 225),
+      childAspectRatio: (170 / 250),
       children: <Widget>[
         Item(
             'Shawarma',

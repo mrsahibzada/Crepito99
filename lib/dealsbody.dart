@@ -51,8 +51,8 @@ class Cardviewer extends StatefulWidget {
 }
 
 class _CardviewerState extends State<Cardviewer> {
+  var myWidget;
   var url;
-
   @override
   initState() {
     super.initState();
@@ -60,21 +60,23 @@ class _CardviewerState extends State<Cardviewer> {
 
   downloadImage() async {
     int length = widget.path.length;
-    String imagePath = widget.path.substring(28, length);
-    StorageReference ref = FirebaseStorage.instance.ref().child('$imagePath');
-    // no need of the file extension, the name will do fine.
-    url = await ref.getDownloadURL();
-    return url.toString();
+    // no need of the file extension, the name will do fi
+
+    url=await FirebaseStorage.instance.ref().child('${widget.path}').getDownloadURL();
+
+    url!=null ? setState((){}):print("wait");
+        return url;
   }
 
   Widget build(BuildContext context) {
-    print(url);
-    return Card(
+    if (url==null)
+     url=this.downloadImage();
+    return url==null ? Text("loading") :Card(
       child: deal_item(
         dealsPrices: 100,
         name: widget.name,
         detail: widget.details,
-        imagePath: downloadImage().toString(),
+        imagePath: url.toString(),
       ),
     );
   }

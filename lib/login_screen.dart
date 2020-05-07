@@ -168,25 +168,31 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       height: 20.0,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.black54),
-            child: Checkbox(
-              value: _rememberMe,
-              checkColor: Color(0xFFDB2C27),
-              activeColor: Colors.black54,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value;
-                });
-              },
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Theme(
+                data: ThemeData(unselectedWidgetColor: Colors.black54),
+                child: Checkbox(
+
+                  value: _rememberMe,
+                  checkColor: Color(0xFFDB2C27),
+                  activeColor: Colors.black54,
+                  onChanged: (value) {
+                    setState(() {
+                      _rememberMe = value;
+                    });
+                  },
+                ),
+              ),
+              Text(
+                'Remember me',
+                style: kLabelStyle,
+              ),
+            ],
           ),
-          Text(
-            'Remember me',
-            style: kLabelStyle,
-          ),
-          SizedBox(width: 45.0),
           Container(
             alignment: Alignment.centerLeft,
             child: FlatButton(
@@ -235,50 +241,50 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildGOTOButtonTF() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
-      width: 175.0,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () => Navigator.pushNamed(context, '/deals_page'),
-        padding: EdgeInsets.all(12.0),
-//        shape:
-//            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        color: Colors.white,
-        child: Row(
-          children: <Widget>[
-            SizedBox(width: 35.0),
-            Text(
-              'MENU',
-              style: TextStyle(
-                  color: Color(0xFFDB2C27),
-                  letterSpacing: 1.5,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'OpenSans'),
-            ),
-            SizedBox(width: 5.0),
-            Icon(
-              Icons.arrow_forward,
-              color: Colors.black,
-            )
-          ],
-        ),
-      ),
+//      padding: EdgeInsets.symmetric(vertical: 25.0),
+//      width: 175.0,
+//      child: RaisedButton(
+//        elevation: 5.0,
+//        onPressed: () => Navigator.pushNamed(context, '/deals_page'),
+//        padding: EdgeInsets.all(12.0),
+////        shape:
+////            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+//        color: Colors.white,
+//        child: Row(
+//          children: <Widget>[
+//            SizedBox(width: 35.0),
+//            Text(
+//              'MENU',
+//              style: TextStyle(
+//                  color: Color(0xFFDB2C27),
+//                  letterSpacing: 1.5,
+//                  fontSize: 18.0,
+//                  fontWeight: FontWeight.w600,
+//                  fontFamily: 'OpenSans'),
+//            ),
+//            SizedBox(width: 5.0),
+//            Icon(
+//              Icons.arrow_forward,
+//              color: Colors.black,
+//            )
+//          ],
+//        ),
+//      ),
     );
   }
 
   Widget _buildOrText() {
     return Column(
-      children: <Widget>[
-        Text(
-          '- OR -',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
-            fontSize: 14.0,
-          ),
-        ),
-      ],
+//      children: <Widget>[
+//        Text(
+//          '- OR -',
+//          style: TextStyle(
+//            color: Colors.black,
+//            fontWeight: FontWeight.w600,
+//            fontSize: 14.0,
+//          ),
+//        ),
+//      ],
     );
   }
 
