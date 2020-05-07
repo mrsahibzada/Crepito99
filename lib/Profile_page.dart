@@ -114,9 +114,6 @@ class _Profile_pageState extends State<Profile_page> {
                         await profile_Collection.document(uid).updateData({
                           'name': name,
                         });
-                        await account_Collection.document(uid).updateData({
-                          'name': name,
-                        });
                       },
                       keyboardType: TextInputType.text,
                       style: TextStyle(
