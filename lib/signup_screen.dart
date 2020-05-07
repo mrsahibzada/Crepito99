@@ -3,7 +3,7 @@
 import 'package:crepito99/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:crepito99/login_screen.dart';
 import 'DatabaseServices.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _SignupScreenState extends State<SignupScreen> {
   String mobileNumber = '';
   String address = '';
   int loyaltyPoints = 0;
-  String uid;
+
   String errorMessage;
 
   final _auth = FirebaseAuth.instance;
@@ -143,7 +143,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 .updateAccount(name, email, password, uid);
             await DatabaseService(uid: user.uid).updateProfile(
                 name, mobileNumber, address, loyaltyPoints, email, password);
+            await DatabaseService(uid:uid).updateMyOrders([]);
             if (newUser != null) {
+
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => HomePage(0)));
             }

@@ -29,8 +29,17 @@ class _My_ordersState extends State<My_orders> {
         stream: Firestore.instance.collection("myorders").document(uid).snapshots(),
       builder: (context, snapshot){
           if(!snapshot.hasData) return Text("loading...");
+
+
+
           var temp=snapshot.data["orderList"];
           var len=snapshot.data["orderList"].length;
+          if (len==0) return Center(child:Text("Place Some Ordre!",
+              style: TextStyle(
+                  color:Colors.grey,
+                  fontSize: 20,
+                  fontFamily: 'Roboto'
+              )));
           return ListView.builder(
 
               itemCount:len,

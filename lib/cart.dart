@@ -15,11 +15,16 @@ class CartDetails {
   var deliveryAddress;
 
   void updateOrder(tot,cartItems,itemNames,itemPrices,itemQty)async{
-
+    var orderList;
     var order_no=await Firestore.instance.collection("orders").document('NoOfOrders').get();
     int orderNo=order_no["no"]+1;
     var tempData=await Firestore.instance.collection("myorders").document(uid).get();
-    var orderList=tempData["orderList"];
+    if (tempData==null)
+      orderList=[];
+    else
+    orderList=tempData["orderList"];
+    print ("look");
+    print (uid);
     orderList.add(orderNo);
     Firestore.instance.collection("orders").document("NoOfOrders").setData({
       "no":orderNo
@@ -490,6 +495,11 @@ class BottomButtons extends StatelessWidget {
                   textColor: Color(0xFFDB2C27),
                   child: Text("No"),
                   onPressed: (){
+                    print(
+                      cartData.cartItems,
+
+                    );
+                    print(cartData.itemNames);
                     cartData.updateOrder(subTotal+deliveryCharges,cartData.cartItems,cartData.itemNames,cartData.itemPrices,cartData.itemQty);
                     cartData.cartItems=0;
                     cartData.itemPrices=[];
