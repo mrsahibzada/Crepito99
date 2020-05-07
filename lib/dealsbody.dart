@@ -24,10 +24,10 @@ class _dealsbodyState extends State<dealsbody> {
               for (var items in data) {
                 print(items.data['name']);
                 final name = items.data['name'];
-//                final price = items.data['price'].toString();
+                final price = items.data['price'].toString();
                 final details = items.data['details'];
                 final path = items.data['imagePath'];
-                final card = Cardviewer(name, details, path);
+                final card = Cardviewer(name, details, path,price);
                 cardWidgets.add(card);
               }
               return Expanded(
@@ -45,7 +45,8 @@ class Cardviewer extends StatefulWidget {
   final String name;
   final String details;
   final String path;
-  const Cardviewer(this.name, this.details, this.path);
+  final String price;
+  const Cardviewer(this.name, this.details, this.path,this.price);
   @override
   _CardviewerState createState() => _CardviewerState();
 }
@@ -73,7 +74,7 @@ class _CardviewerState extends State<Cardviewer> {
      url=this.downloadImage();
     return url==null ? Text("loading") :Card(
       child: deal_item(
-        dealsPrices: 100,
+        dealsPrices: int.parse(widget.price),
         name: widget.name,
         detail: widget.details,
         imagePath: url.toString(),

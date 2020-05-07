@@ -15,6 +15,12 @@ class googleMaps extends StatefulWidget {
 
 class _googleMapsState extends State<googleMaps> {
   @override
+//  void initState() {
+//    _animateToUser();
+//    super.initState();
+//  }
+
+  @override
 //  Completer<GoogleMapController> _controller=Completer();
   GoogleMapController _controller;
   Location location= Location();
