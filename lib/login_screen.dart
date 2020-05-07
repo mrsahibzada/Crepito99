@@ -1,7 +1,9 @@
 import 'package:crepito99/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crepito99/cart.dart';
+var uid;
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -14,6 +16,30 @@ class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   String errorMessage;
   bool credential_check = false;
+  void initialize ()async  {
+    try{
+
+      final _auth= FirebaseAuth.instance;
+      final FirebaseUser user = await _auth.currentUser();
+      uid = user.uid;
+      var data=await Firestore.instance.collection('cart').document(uid).get();
+      cartData.cartItems=data['NoOfItems'];
+      cartData.itemNames=data['itemList'];
+      cartData.itemPrices=data['itemPrices'];
+      cartData.itemQty=data['itemQty'];
+      cartData.updateData();}
+    catch(e)
+    {
+      final _auth= FirebaseAuth.instance;
+      final FirebaseUser user = await _auth.currentUser();
+      uid = user.uid;
+      cartData.cartItems=0;
+      cartData.itemNames=[];
+      cartData.itemPrices=[];
+      cartData.itemQty=[];
+      print(e);
+    }
+  }
 
   Widget _buildPasswordTF() {
     return Column(
@@ -94,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
           try {
             final newUser = await _auth.signInWithEmailAndPassword(
                 email: email.trim(), password: password);
+            initialize();
             if (newUser != null) {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => HomePage(0)));

@@ -71,6 +71,7 @@ class _CardviewerState extends State<Cardviewer> {
     print(url);
     return Card(
       child: deal_item(
+        dealsPrices: 100,
         name: widget.name,
         detail: widget.details,
         imagePath: downloadImage().toString(),

@@ -1,14 +1,38 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crepito99/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:crepito99/Tracking.dart';
-
+import 'package:crepito99/DatabaseServices.dart';
+import 'package:crepito99/login_screen.dart';
+var deliveryCharges=100;
 class CartDetails {
   var cartItems=0;
   var itemNames=[];
   var itemPrices=[];
   var itemQty=[];
   var deliveryAddress;
+
+  void updateOrder(tot,cartItems,itemNames,itemPrices,itemQty)async{
+
+    var order_no=await Firestore.instance.collection("orders").document('NoOfOrders').get();
+    int orderNo=order_no["no"]+1;
+    var tempData=await Firestore.instance.collection("myorders").document(uid).get();
+    var orderList=tempData["orderList"];
+    orderList.add(orderNo);
+    Firestore.instance.collection("orders").document("NoOfOrders").setData({
+      "no":orderNo
+    });
+    var date=DateTime.now();
+    var formatted=date.day.toString()+"-"+date.month.toString()+"-"+date.year.toString();
+    await DatabaseService(uid:uid).updateOrders(orderNo,itemNames,cartItems,itemQty,itemPrices,0,tot,formatted,0,0);
+    await DatabaseService(uid:uid).updateMyOrders(orderList);
+  }
+  void refresh ()async{
+    await DatabaseService(uid:uid).updateCart(cartData.itemNames,cartData.cartItems,cartData.itemQty,cartData.itemPrices);
+  }
+
   Function updateData= () {
 
 
@@ -45,6 +69,7 @@ int deliveryCharges=9;
   @override
 
   Widget build(BuildContext context) {
+
     if(cartData.cartItems==0)
       return Center(child:Text("Your cart's empty. Fill it up!",
           style: TextStyle(
@@ -95,7 +120,7 @@ class CartItem extends StatefulWidget{ //Returns CartItem Object
   final Function callBack;
   String itemName;
   int itemPrice;
-
+int globalIndex;
   CartItem(this.callBack,this.itemQty,this.itemName,this.itemPrice);
 
   @override
@@ -133,6 +158,7 @@ class _CartItem extends State<CartItem>{
                          if (cartData.itemQty[indexOf]>0)
                            {cartData.itemQty[indexOf]-=1;
                          subTotal-=itemPrice;
+                           cartData.refresh();
                            callBack();
                            }
                        });
@@ -151,6 +177,7 @@ class _CartItem extends State<CartItem>{
                       onPressed: (){
                         setState(() {cartData.itemQty[indexOf]+=1;
                         subTotal+=itemPrice;
+                        cartData.refresh();
                             callBack();
 
                         });},),
@@ -463,12 +490,15 @@ class BottomButtons extends StatelessWidget {
                   textColor: Color(0xFFDB2C27),
                   child: Text("No"),
                   onPressed: (){
+                    cartData.updateOrder(subTotal+deliveryCharges,cartData.cartItems,cartData.itemNames,cartData.itemPrices,cartData.itemQty);
                     cartData.cartItems=0;
                     cartData.itemPrices=[];
                     cartData.itemNames=[];
                     cartData.itemQty=[];
-                        () => Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => TrackOrder()));
+                    cartData.updateData();
+                    cartData.refresh();
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => TrackOrder(null)));
 
 
                   },
@@ -486,12 +516,16 @@ class BottomButtons extends StatelessWidget {
                   child: Text("Yes"),
 
                   onPressed: (){
+                    cartData.updateOrder(subTotal+deliveryCharges,cartData.cartItems,cartData.itemNames,cartData.itemPrices,cartData.itemQty);
                     cartData.cartItems=0;
                     cartData.itemPrices=[];
                     cartData.itemNames=[];
                     cartData.itemQty=[];
+                    cartData.updateData();
+
+                    cartData.refresh();
                     Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => TrackOrder()));
+                        .push(MaterialPageRoute(builder: (context) => TrackOrder(null)));
 
 
                   },

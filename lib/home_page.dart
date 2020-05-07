@@ -12,6 +12,7 @@ import 'package:crepito99/my_flutter_app_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Profile_page.dart';
+import 'package:crepito99/my_orders.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -53,7 +54,8 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
         CustomDrawerHeader(), // Displays drawer header information
         CustomListItem(Icons.flip_to_front, 'My Orders',
-            () => print("workkkk")), // Displays Option in drawer
+                () =>
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => My_orders()))), // Displays Option in drawer
         CustomListItem(Icons.star, 'Rate us', () => {}),
         CustomListItem(
             Icons.phone_android, 'Contact us\n03157008877', () => {}),

@@ -8,7 +8,7 @@ class deal_item extends StatelessWidget {
   int dealsPrices;
   final String imagePath;
 
-  deal_item({@required this.imagePath,@required this.name, @required this.detail});
+  deal_item({@required this.dealsPrices,@required this.imagePath,@required this.name, @required this.detail});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,9 @@ class deal_item extends StatelessWidget {
           cartData.itemNames.add(name);
           cartData.itemPrices.add(dealsPrices);
           cartData.itemQty.add(1);
+          cartData.cartItems+=1;
           cartData.updateData();
+          cartData.refresh();
           Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (context) => HomePage(2)));
