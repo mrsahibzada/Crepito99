@@ -95,7 +95,6 @@ class _TrackOrderState extends State<TrackOrder> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) return Text("loading");
-
                 return Center(
                   child: Column(children: <Widget>[
                     CheckList(0, progress[snapshot.data["status"]][0],
