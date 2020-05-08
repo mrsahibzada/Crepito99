@@ -12,7 +12,7 @@ A standard coding style is used in the development. A mixture of object-oriented
 
 # Screenshots
 
-![alt text](https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)
+![alt text](![alt text](https://github.com/mrsahibzada/Images-for-ReadME/blob/master/WhatsApp%20Image%202020-05-08%20at%207.26.42%20AM%20(1).jpeg)
 Include logo/demo screenshot etc.
 
 # Tech/framework used
