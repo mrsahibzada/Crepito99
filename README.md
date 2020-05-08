@@ -162,7 +162,7 @@ Built in Flutter using dart programming language. Backend and Database managed a
 
 # API Reference
 
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
+API's generated from Google Firebase for User Authentication, Database and Storage for the efficient communication of the app with its cashier [web-app portal](https://github.com/MuteeullahBaig/crepito99_web_app).
 
 # How to use?
 
