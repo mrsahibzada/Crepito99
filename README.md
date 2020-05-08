@@ -38,11 +38,11 @@ Built in Flutter using dart programming language. Backend and Database managed a
 
 # Code Example
 
-class _TrackOrderState extends State<TrackOrder> {
-  String order;
-  _TrackOrderState(this.order);
-  @override
-  Widget build(BuildContext context) {
+    class _TrackOrderState extends State<TrackOrder> {
+      String order;
+    _TrackOrderState(this.order);
+    @override
+    Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
