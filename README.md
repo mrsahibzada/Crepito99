@@ -4,18 +4,15 @@ A food order delivery restaurant Mobile app built on flutter.
 
 # Motivation
 
-A short description of the motivation behind the creation and maintenance of the project. This should explain why the project exists.
-
-# Build status
-
-Build status of continus integration i.e. travis, appveyor etc. Ex. -
+This project intends to make a holistic mobile phone application for a Quick Service Restaurant, Crepito99, which is based in Valencia Town, Lahore. The application will enable customers to directly order food from Crepito 99 online without any intervention by any third party application.
 
 # Code style
 
-If you're using any code style like xo, standard etc. That will help others while contributing to your project. Ex. -
+A standard coding style is used in the development. A mixture of object-oriented, and procedural programming is used.
 
 # Screenshots
 
+![alt text](https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png)
 Include logo/demo screenshot etc.
 
 # Tech/framework used
