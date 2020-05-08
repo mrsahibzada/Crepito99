@@ -10,17 +10,6 @@ This project intends to make a holistic mobile phone application for a Quick Ser
 
 A standard coding style is used in the development. A mixture of object-oriented, and procedural programming is used.
 
-# Screenshots
-
-![alt text](https://github.com/mrsahibzada/Images-for-ReadME/blob/master/rsz_logo_black_background.png)
-
-![alt text](https://github.com/mrsahibzada/Images-for-ReadME/blob/master/WhatsApp%20Image%202020-05-08%20at%207.26.41%20AM.jpeg)
-
-![alt text](https://github.com/mrsahibzada/Images-for-ReadME/blob/master/WhatsApp%20Image%202020-05-08%20at%207.26.42%20AM.jpeg)
-
-![alt text](https://github.com/mrsahibzada/Images-for-ReadME/blob/master/WhatsApp%20Image%202020-05-08%20at%207.26.42%20AM%20(1).jpeg)
-
-
 # Tech/framework used
 
 Built in Flutter using dart programming language. Backend and Database managed at Firebase implemented with Flutter.
