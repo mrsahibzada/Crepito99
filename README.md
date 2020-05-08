@@ -158,7 +158,7 @@ class _TrackOrderState extends State<TrackOrder> {
 1. Install Flutter.
 2. Install Android Studio.
 3. Add flutter plugin to Android Studio.
-4. Clone [a link](https://github.com/mrsahibzada/Crepito99) GITHUB repository and add it to your Flutter Project.
+4. Clone [this](https://github.com/mrsahibzada/Crepito99) GITHUB repository and add it to your Flutter Project.
 5. Run the project on either an iOS or an Android emulator.
 
 # API Reference
@@ -170,7 +170,7 @@ Depending on the size of the project, if it is small and simple enough the refer
 1. Install Flutter.
 2. Install Android Studio.
 3. Add flutter plugin to Android Studio.
-4. Clone [a link](https://github.com/mrsahibzada/Crepito99) GITHUB repository and add it to your Flutter Project.
+4. Clone [this](https://github.com/mrsahibzada/Crepito99) GITHUB repository and add it to your Flutter Project.
 5. Run the project on either an iOS or an Android emulator.
 6. Build an apk Android app using 'flutter build apk'.
 7. It will be located in build/app/outputs/apk/release/app-release.apk.
