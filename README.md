@@ -1,6 +1,6 @@
 # Crepito99
 
-A food order delivery restaurant Mobile app built on flutter for both Android & iOS.
+A food ordering Mobile Application for both Android & iOS built on Flutter for a Quick Service Restaurant Ćrepito99.
 
 # Motivation
 
