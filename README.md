@@ -12,7 +12,7 @@ A standard coding style is used in the development. A mixture of object-oriented
 
 # Screenshots
 
-![alt text](https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png)
+![alt text](https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500)
 Include logo/demo screenshot etc.
 
 # Tech/framework used
