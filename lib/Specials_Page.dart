@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:crepito99/MyAppBar.dart';
-import 'package:crepito99/BottomNavigationBar.dart';
-import 'menuItem.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crepito99/BottomNavigationBar.dart';
+import 'package:crepito99/MyAppBar.dart';
+import 'package:flutter/material.dart';
 
+import 'menuItem.dart';
 
 class Specials extends StatefulWidget {
   @override
@@ -17,17 +17,20 @@ class _SpecialsState extends State<Specials> {
     return MaterialApp(
       home: Scaffold(
         appBar: Myappbar(
-          cont:context,
+          cont: context,
           appBar: AppBar(),
           Title: 'Specials',
         ),
         bottomNavigationBar: bottombar(),
-        body:Padding(
+        body: Padding(
             padding: EdgeInsets.all(10.0),
             child: Column(children: <Widget>[
               StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('Specials').snapshots(),
                 builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text("Loading");
+                  }
                   final data = snapshot.data.documents;
                   List<CardViewer> cardWidgets = [];
                   for (var items in data) {
@@ -35,7 +38,7 @@ class _SpecialsState extends State<Specials> {
                     final name = items.data['name'];
                     final price = items.data['price'].toString();
                     final loyaltyPoints =
-                    items.data['loyaltyPoints'].toString();
+                        items.data['loyaltyPoints'].toString();
                     final card = CardViewer(
                       name: name,
                       price: price,

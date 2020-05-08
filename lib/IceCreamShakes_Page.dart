@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crepito99/MyAppBar.dart';
+import 'package:flutter/material.dart';
+
 import 'BottomNavigationBar.dart';
 import 'menuItem.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 
 class IceCreamShakes extends StatefulWidget {
   @override
@@ -22,9 +22,8 @@ class _IceCreamShakesState extends State<IceCreamShakes> {
         accentColor: Colors.red,
       ),
       home: Scaffold(
-
         appBar: Myappbar(
-          cont:context,
+          cont: context,
           appBar: AppBar(),
           Title: 'Ice-Cream Shakes',
         ),
@@ -35,6 +34,9 @@ class _IceCreamShakesState extends State<IceCreamShakes> {
               StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('Ice-cream Shakes').snapshots(),
                 builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text("Loading");
+                  }
                   final data = snapshot.data.documents;
                   List<CardViewer> cardWidgets = [];
                   for (var items in data) {
@@ -42,7 +44,7 @@ class _IceCreamShakesState extends State<IceCreamShakes> {
                     final name = items.data['name'];
                     final price = items.data['price'].toString();
                     final loyaltyPoints =
-                    items.data['loyaltyPoints'].toString();
+                        items.data['loyaltyPoints'].toString();
                     final card = CardViewer(
                       name: name,
                       price: price,

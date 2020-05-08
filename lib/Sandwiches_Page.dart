@@ -1,25 +1,26 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:crepito99/MyAppBar.dart';
-import 'package:crepito99/BottomNavigationBar.dart';
-import 'menuItem.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crepito99/BottomNavigationBar.dart';
+import 'package:crepito99/MyAppBar.dart';
+import 'package:flutter/material.dart';
 
-
+import 'menuItem.dart';
 
 class _SandwichesState extends State<Sandwiches> {
-
   Firestore _firestore = Firestore.instance;
   @override
-  initState(){
+  initState() {
     super.initState();
     collectData();
   }
 
-  void collectData()async{
-    sandwichesTypes= await Firestore.instance.collection('Category').document('Sandwich').get();
+  void collectData() async {
+    sandwichesTypes = await Firestore.instance
+        .collection('Category')
+        .document('Sandwich')
+        .get();
     types = List.from(sandwichesTypes['items']);
   }
+
   List<String> types;
   var sandwichesTypes;
 
@@ -33,18 +34,20 @@ class _SandwichesState extends State<Sandwiches> {
       ),
       home: Scaffold(
         appBar: Myappbar(
-          cont:context,
+          cont: context,
           appBar: AppBar(),
           Title: 'Sandwiches',
         ),
         bottomNavigationBar: bottombar(),
-
         body: Padding(
             padding: EdgeInsets.all(10.0),
             child: Column(children: <Widget>[
               StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('Sandwiches').snapshots(),
                 builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text("Loading");
+                  }
                   final data = snapshot.data.documents;
                   List<CardViewer> cardWidgets = [];
                   for (var items in data) {
@@ -52,7 +55,7 @@ class _SandwichesState extends State<Sandwiches> {
                     final name = items.data['name'];
                     final price = items.data['price'].toString();
                     final loyaltyPoints =
-                    items.data['loyaltyPoints'].toString();
+                        items.data['loyaltyPoints'].toString();
                     final card = CardViewer(
                       name: name,
                       price: price,
@@ -87,7 +90,6 @@ class CardViewer extends StatelessWidget {
             itemLP: loyaltyPoint + ' LP'));
   }
 }
-
 
 class Sandwiches extends StatefulWidget {
   @override

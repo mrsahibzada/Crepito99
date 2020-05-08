@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:crepito99/MyAppBar.dart';
-import 'package:crepito99/BottomNavigationBar.dart';
-import 'menuItem.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crepito99/BottomNavigationBar.dart';
+import 'package:crepito99/MyAppBar.dart';
+import 'package:flutter/material.dart';
 
+import 'menuItem.dart';
 
 class beverages extends StatefulWidget {
   @override
@@ -14,7 +14,6 @@ class _beveragesState extends State<beverages> {
   Firestore _firestore = Firestore.instance;
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       theme: ThemeData(
         iconTheme: IconThemeData(color: Colors.red),
@@ -23,24 +22,28 @@ class _beveragesState extends State<beverages> {
       ),
       home: Scaffold(
         appBar: Myappbar(
-          cont:context,
+          cont: context,
           appBar: AppBar(),
           Title: 'Beverages',
         ),
         bottomNavigationBar: bottombar(),
-        body:Padding(
+        body: Padding(
             padding: EdgeInsets.all(10.0),
             child: Column(children: <Widget>[
               StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('Beverages').snapshots(),
                 builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text("Loading");
+                  }
                   final data = snapshot.data.documents;
                   List<CardViewer> cardWidgets = [];
                   for (var items in data) {
                     print(items.data['name']);
                     final name = items.data['name'];
                     final price = items.data['price'].toString();
-                    final loyaltyPoints = items.data['loyaltyPoints'].toString();
+                    final loyaltyPoints =
+                        items.data['loyaltyPoints'].toString();
                     final card = CardViewer(
                       name: name,
                       price: price,

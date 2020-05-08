@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:crepito99/MyAppBar.dart';
 import 'package:crepito99/BottomNavigationBar.dart';
+import 'package:crepito99/MyAppBar.dart';
+import 'package:flutter/material.dart';
+
 import 'menuItem.dart';
 
 class Burgers extends StatefulWidget {
@@ -32,6 +33,9 @@ class _BurgersState extends State<Burgers> {
               StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('Burgers').snapshots(),
                 builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text("Loading");
+                  }
                   final data = snapshot.data.documents;
                   List<CardViewer> cardWidgets = [];
                   for (var items in data) {

@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-import 'main.dart';
-import 'package:crepito99/MyAppBar.dart';
-import 'package:crepito99/BottomNavigationBar.dart';
-import 'menuItem.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crepito99/BottomNavigationBar.dart';
+import 'package:crepito99/MyAppBar.dart';
+import 'package:flutter/material.dart';
 
+import 'menuItem.dart';
 
 class Shawarmas extends StatefulWidget {
   @override
@@ -13,7 +12,6 @@ class Shawarmas extends StatefulWidget {
 
 class _ShawarmasState extends State<Shawarmas> {
   Firestore _firestore = Firestore.instance;
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +23,10 @@ class _ShawarmasState extends State<Shawarmas> {
       ),
       home: Scaffold(
         appBar: Myappbar(
-          cont:context,
+          cont: context,
           appBar: AppBar(),
-          Title:"Shawarma",),
+          Title: "Shawarma",
+        ),
         bottomNavigationBar: bottombar(),
         body: Padding(
             padding: EdgeInsets.all(10.0),
@@ -35,6 +34,9 @@ class _ShawarmasState extends State<Shawarmas> {
               StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('Shawarmas').snapshots(),
                 builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text("Loading");
+                  }
                   final data = snapshot.data.documents;
                   List<CardViewer> cardWidgets = [];
                   for (var items in data) {
@@ -42,7 +44,7 @@ class _ShawarmasState extends State<Shawarmas> {
                     final name = items.data['name'];
                     final price = items.data['price'].toString();
                     final loyaltyPoints =
-                    items.data['loyaltyPoints'].toString();
+                        items.data['loyaltyPoints'].toString();
                     final card = CardViewer(
                       name: name,
                       price: price,

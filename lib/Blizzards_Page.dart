@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:crepito99/MyAppBar.dart';
-import 'package:crepito99/BottomNavigationBar.dart';
-import 'menuItem.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crepito99/BottomNavigationBar.dart';
+import 'package:crepito99/MyAppBar.dart';
+import 'package:flutter/material.dart';
 
+import 'menuItem.dart';
 
 class blizzards extends StatefulWidget {
   @override
@@ -14,7 +14,6 @@ class _blizzardsState extends State<blizzards> {
   Firestore _firestore = Firestore.instance;
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       theme: ThemeData(
         accentColor: Colors.red,
@@ -23,7 +22,7 @@ class _blizzardsState extends State<blizzards> {
       ),
       home: Scaffold(
         appBar: Myappbar(
-          cont:context,
+          cont: context,
           appBar: AppBar(),
           Title: 'Blizzards',
         ),
@@ -34,6 +33,9 @@ class _blizzardsState extends State<blizzards> {
               StreamBuilder<QuerySnapshot>(
                 stream: _firestore.collection('Blizzards').snapshots(),
                 builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text("Loading");
+                  }
                   final data = snapshot.data.documents;
                   List<CardViewer> cardWidgets = [];
                   for (var items in data) {
@@ -41,7 +43,7 @@ class _blizzardsState extends State<blizzards> {
                     final name = items.data['name'];
                     final price = items.data['price'].toString();
                     final loyaltyPoints =
-                    items.data['loyaltyPoints'].toString();
+                        items.data['loyaltyPoints'].toString();
                     final card = CardViewer(
                       name: name,
                       price: price,

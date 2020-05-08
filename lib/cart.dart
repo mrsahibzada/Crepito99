@@ -24,10 +24,7 @@ class CartDetails {
     int orderNo = order_no["no"] + 1;
     var tempData =
         await Firestore.instance.collection("myorders").document(uid).get();
-    if (tempData == null)
-      orderList = [];
-    else
-      orderList = tempData["orderList"];
+    orderList = tempData["orderList"];
     print("look");
     print(uid);
     orderList.add(orderNo);

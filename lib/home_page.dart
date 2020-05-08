@@ -8,12 +8,14 @@ import 'package:crepito99/Specials_Page.dart';
 import 'package:crepito99/Wraps_Page.dart';
 import 'package:crepito99/cart.dart';
 import 'package:crepito99/dealsbody.dart';
+import 'package:crepito99/login_screen.dart';
 import 'package:crepito99/my_flutter_app_icons.dart';
+import 'package:crepito99/my_orders.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'Profile_page.dart';
-import 'package:crepito99/my_orders.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import 'Profile_page.dart';
 
 class HomePage extends StatefulWidget {
   //Widget Class for main menu screen.
@@ -38,8 +40,8 @@ class _HomePageState extends State<HomePage> {
             //Icon button to go to profile
             icon: Icon(Icons.account_circle),
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Profile_page()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => Profile_page()));
             },
           )
         ],
@@ -53,12 +55,20 @@ class _HomePageState extends State<HomePage> {
           child: ListView(// 4 Options in Drawer
               children: <Widget>[
         CustomDrawerHeader(), // Displays drawer header information
-        CustomListItem(Icons.flip_to_front, 'My Orders',
-                () =>
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => My_orders()))), // Displays Option in drawer
-        CustomListItem(Icons.star, 'Rate us', () => {}),
         CustomListItem(
-            Icons.phone_android, 'Contact us\n03157008877', () => {}),
+            Icons.flip_to_front,
+            'My Orders',
+            () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    My_orders()))), // Displays Option in drawer
+        CustomListItem(Icons.star, 'Rate us', () => {}),
+        CustomListItem(Icons.phone_android, 'Contact us\n03157008877',
+            () => launch("tel://03157008877")),
+        CustomListItem(
+            Icons.face,
+            'Sign Out',
+            () => Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => LoginScreen()))),
       ])),
       bottomNavigationBar: BottomNavigationBar(
           unselectedItemColor: Color(0xFFDB2C27),
@@ -109,11 +119,9 @@ class Item extends StatelessWidget {
       onTap: onTap,
       child: Card(
           semanticContainer: false,
-
           elevation: 10.0,
           child: Column(children: <Widget>[
-            new Image.asset(imagePath,
-                 fit: BoxFit.cover),
+            new Image.asset(imagePath, fit: BoxFit.cover),
             new SizedBox(height: 1.0),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),

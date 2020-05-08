@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crepito99/DatabaseServices.dart';
 import 'package:crepito99/cart.dart';
 import 'package:crepito99/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
       final _auth = FirebaseAuth.instance;
       final FirebaseUser user = await _auth.currentUser();
       uid = user.uid;
-      await DatabaseService(uid: uid).updateMyOrders([]);
       var data =
           await Firestore.instance.collection('cart').document(uid).get();
       cartData.cartItems = data['NoOfItems'];
@@ -36,7 +34,6 @@ class _LoginScreenState extends State<LoginScreen> {
       final _auth = FirebaseAuth.instance;
       final FirebaseUser user = await _auth.currentUser();
       uid = user.uid;
-      await DatabaseService(uid: uid).updateMyOrders([]);
       cartData.cartItems = 0;
       cartData.itemNames = [];
       cartData.itemPrices = [];
